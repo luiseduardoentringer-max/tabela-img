@@ -91,11 +91,16 @@ app.post('/tabela', async (req, res) => {
     await page.setViewport({ width: 680, height: 100, deviceScaleFactor: 2 });
     await page.setContent(html, { waitUntil: 'networkidle0' });
     const el = await page.$('.wrap');
-    const png = await el.screenshot({ type: 'png' });
+    const shot = await el.screenshot({ type: 'png' });
     await page.close();
 
+    // Puppeteer novo retorna Uint8Array; Express serializa isso como JSON.
+    // Converte pra Buffer e envia bytes crus com res.end.
+    const png = Buffer.isBuffer(shot) ? shot : Buffer.from(shot);
+
     res.set('Content-Type', 'image/png');
-    res.send(png);
+    res.set('Content-Length', png.length);
+    res.end(png);
   } catch (err) {
     console.error('erro ao gerar tabela:', err);
     res.status(500).json({ error: String(err && err.message || err) });
