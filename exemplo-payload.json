@@ -1,0 +1,12 @@
+{
+  "titulo": "Legumes — Segunda 15/06",
+  "subtitulo": "Ceasa-ES (ref. 14/06)",
+  "colunas": ["Produto", "Preço (R$)", "Var."],
+  "linhas": [
+    { "Produto": "Tomate 1ª", "Preço (R$)": "45,00–60,00/cx", "Var.": "+14,2%" },
+    { "Produto": "Cenoura", "Preço (R$)": "38,00–42,00/cx", "Var.": "-9,1%" },
+    { "Produto": "Batata", "Preço (R$)": "55,00–62,00/sc", "Var.": "—" }
+  ],
+  "marca": "NF Fácil Rural",
+  "corHeader": "#15803d"
+}

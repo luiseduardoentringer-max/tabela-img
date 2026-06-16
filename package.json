@@ -1,0 +1,13 @@
+{
+  "name": "tabela-img",
+  "version": "1.0.0",
+  "description": "Gerador de imagem PNG de tabela de precos (renderizacao via Puppeteer)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "puppeteer": "^23.0.0"
+  }
+}

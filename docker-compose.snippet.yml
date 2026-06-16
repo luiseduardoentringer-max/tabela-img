@@ -1,0 +1,46 @@
+# ============================================================
+#  COMO ADICIONAR AO SEU docker-compose.yml
+# ============================================================
+#
+#  1. Copie a pasta inteira "tabela-img" para o servidor, ao lado
+#     do seu docker-compose.yml.
+#
+#  2. Adicione o serviço abaixo dentro de "services:" no seu
+#     docker-compose.yml existente (onde já está o n8n).
+#
+#  3. IMPORTANTE: o n8n e o tabela-img precisam estar na MESMA
+#     network do Docker pra um enxergar o outro pelo nome.
+#     Se seu n8n já está numa network nomeada, use a mesma aqui.
+#     Se não tem network definida, ambos no mesmo compose já
+#     compartilham a rede default automaticamente.
+#
+#  4. Suba com:  docker compose up -d --build tabela-img
+#
+#  5. No n8n, a URL do serviço passa a ser:
+#         http://tabela-img:3000/tabela
+#     (usa o NOME do serviço como host — resolve dentro da rede Docker,
+#      não precisa de IP nem de porta exposta pra fora)
+# ============================================================
+
+services:
+  tabela-img:
+    build: ./tabela-img
+    container_name: tabela-img
+    restart: unless-stopped
+    environment:
+      # opcional: descomente e defina um token pra proteger o serviço
+      # - TABELA_TOKEN=algum-token-secreto
+      - PORT=3000
+    # NÃO precisa expor porta pro host (ports:) se só o n8n vai usar.
+    # Se quiser testar do seu navegador/curl de fora, descomente:
+    # ports:
+    #   - "3001:3000"
+    networks:
+      - default   # <-- troque pela network do seu n8n se for nomeada
+
+# Se seu n8n usa uma network nomeada (ex: "n8n_net"), declare assim
+# no fim do arquivo (se ainda não existir) e use o mesmo nome acima:
+#
+# networks:
+#   n8n_net:
+#     external: true
